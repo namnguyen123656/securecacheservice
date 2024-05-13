@@ -1,16 +1,15 @@
-function numDecodings(s) {
-  const dp = new Array(s.length + 1).fill(0);
-  dp[0] = 1;
-  dp[1] = s[0] === "0" ? 0 : 1;
-  for (let i = 2; i <= s.length; i++) {
-    const oneDigit = parseInt(s.substring(i - 1, i));
-    const twoDigits = parseInt(s.substring(i - 2, i));
-    if (oneDigit >= 1) {
-      dp[i] += dp[i - 1];
-    }
-    if (twoDigits >= 10 && twoDigits <= 26) {
-      dp[i] += dp[i - 2];
+const selectionSortRecursive = (arr, start = 0) => {
+  if (start >= arr.length - 1) {
+    return arr;
+  }
+  let minIndex = start;
+  for (let i = start + 1; i < arr.length; i++) {
+    if (arr[i] < arr[minIndex]) {
+      minIndex = i;
     }
   }
-  return dp[s.length];
-}
+  if (minIndex !== start) {
+    [arr[start], arr[minIndex]] = [arr[minIndex], arr[start]];
+  }
+  return selectionSortRecursive(arr, start + 1);
+};
